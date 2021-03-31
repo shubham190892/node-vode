@@ -1,7 +1,7 @@
 
 /**
  * Problem: Sort the elements of a queue without using extra space or recursion
- * Queue has only two std methods -> enqueue and dequeue
+ * Queue has only two std methods -> pushBack and popFront
  */
 
 /**
@@ -16,26 +16,27 @@
 /**
  * @param queue: Queue
  */
-function sort(queue) {
+
+function solve(queue) {
     const n = queue.size();
     if(n <= 1) return queue;
     for(let i = 0; i<(n-1); ++i){
-        let top = queue.dequeue();
+        let top = queue.popFront();
         for(let j = 0; j<(n-1); ++j){
-            const e = queue.dequeue();
+            const e = queue.popFront();
             if(top > e){
-                queue.enqueue(e);
+                queue.pushBack(e);
             }else{
-                queue.enqueue(top);
+                queue.pushBack(top);
                 top = e;
             }
         }
-        queue.enqueue(top);
+        queue.pushBack(top);
     }
     return queue;
 }
 
 module.exports = {
-    sort: sort
+    solve: solve
 };
 

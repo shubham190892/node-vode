@@ -1,5 +1,5 @@
 class Queue {
-    items
+    items;
     constructor(items) {
         this.items = [];
         for(const i of items){
@@ -7,11 +7,11 @@ class Queue {
         }
     }
 
-    enqueue(item){
+    pushBack(item){
         this.items.push(item);
     }
 
-    dequeue(){
+    popFront(){
         if(this.isEmpty()) throw new Error("Queue is empty");
         return this.items.shift();
     }
