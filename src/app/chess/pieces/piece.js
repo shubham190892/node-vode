@@ -11,12 +11,6 @@ class Piece {
         this.notation = (color === Color.WHITE ? 'w' : 'b') + symbol;
     }
 
-    move(game, source, target){
-        game.board[target.r][target.c] = game.board[source.r][source.c];
-        game.board[source.r][source.c] = null;
-        console.log('Piece move');
-    }
-
     normalizeIndex(r, c){
         return `${r},${c}`;
     }

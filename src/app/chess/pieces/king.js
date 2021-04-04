@@ -5,9 +5,6 @@ class King extends Piece{
         super(color, 'King','K');
     }
 
-    /*move(){
-        console.log('King move');
-    }*/
 }
 
 module.exports = {

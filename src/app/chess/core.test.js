@@ -43,62 +43,64 @@ describe('scan', () => {
 
 describe('walk', () => {
     const walk = r_c.__get__('walk');
+    const e4 = c.Index.fromChess('e4');
+    const e2 = c.Index.fromChess('e2');
     it('empty board', () => {
         const g = new Game();
-        let squares = walk(g, 'e4', 1, 0);
+        const g1 = new Game();
+        g1.init();
+        g.setPiece(g1.getPiece(e2), e4);
+        let squares = walk(g, e4, 1, 0);
         expect(squares).toEqual(['e3', 'e2', 'e1']);
-        squares = walk(g, 'e4', 0, 1);
+        squares = walk(g, e4, 0, 1);
         expect(squares).toEqual(['f4', 'g4', 'h4']);
-        squares = walk(g, 'e4', -1, 0);
+        squares = walk(g, e4, -1, 0);
         expect(squares).toEqual(['e5', 'e6', 'e7', 'e8']);
-        squares = walk(g, 'e4', 0, -1);
+        squares = walk(g, e4, 0, -1);
         expect(squares).toEqual(['d4', 'c4', 'b4', 'a4']);
 
-        squares = walk(g, 'e4', 1, 1);
+        squares = walk(g, e4, 1, 1);
         expect(squares).toEqual(['f3', 'g2', 'h1']);
-        squares = walk(g, 'e4', -1, -1);
+        squares = walk(g, e4, -1, -1);
         expect(squares).toEqual(['d5', 'c6', 'b7', 'a8']);
-        squares = walk(g, 'e4', 1, -1);
+        squares = walk(g, e4, 1, -1);
         expect(squares).toEqual(['d3', 'c2', 'b1']);
-        squares = walk(g, 'e4', -1, 1);
+        squares = walk(g, e4, -1, 1);
         expect(squares).toEqual(['f5', 'g6', 'h7']);
     });
 
     it('board with pieces', function () {
         const g = new Game();
         g.init();
-        let squares = walk(g, 'e4', 1, 0);
+        g.clone(e2, e4);
+        let squares = walk(g, e4, 1, 0);
         expect(squares).toEqual(['e3']);
-        squares = walk(g, 'e4', -1, -1);
-        expect(squares).toEqual(['d5', 'c6']);
+        squares = walk(g, e4, -1, -1);
+        expect(squares).toEqual(['d5', 'c6', 'b7']);
     });
 
 });
 
 describe('walkStraight', () => {
-    it('empty board', () => {
-        const g = new Game();
-        let squares = c.walkStraight(g, 'd4');
-        expect(squares).toEqual(["d5", "d6", "d7", "d8", "d3", "d2", "d1", "c4", "b4", "a4", "e4", "f4", "g4", "h4"]);
-    });
+    const d4 = c.Index.fromChess('d4');
+    const d2 = c.Index.fromChess('d2');
     it('board with pieces', () => {
         const g = new Game();
         g.init();
-        let squares = c.walkStraight(g, 'd4');
-        expect(squares).toEqual(["d5", "d6", "d3", "c4", "b4", "a4", "e4", "f4", "g4", "h4"]);
+        g.clone(d2, d4);
+        let squares = c.walkStraight(g, d4);
+        expect(squares).toEqual(["d5", "d6", "d7", "d3", "c4", "b4", "a4", "e4", "f4", "g4", "h4"]);
     });
 });
 
 describe('walkDiagonal', () => {
-    it('empty board', () => {
-        const g = new Game();
-        let squares = c.walkDiagonal(g, 'f4');
-        expect(squares).toEqual(['e5','d6','c7','b8','e3','d2','c1','g5','h6','g3','h2']);
-    });
+    const f4 = c.Index.fromChess('f4');
+    const f2 = c.Index.fromChess('f2');
     it('board with pieces', () => {
         const g = new Game();
         g.init();
-        let squares = c.walkDiagonal(g, 'f4');
-        expect(squares).toEqual(['e5','d6','e3','g5','h6','g3']);
+        g.clone(f2, f4);
+        let squares = c.walkDiagonal(g, f4);
+        expect(squares).toEqual(['e5','d6','c7','e3','g5','h6','g3']);
     });
 });

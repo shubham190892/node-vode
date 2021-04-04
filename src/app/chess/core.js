@@ -123,32 +123,38 @@ function scan(game, filter){
     return res;
 }
 
-function walk(game, fr, rowJump, colJump){
-    let {r,c} = fromChess(fr);
-    r += rowJump; c += colJump;
+function walk(game, source, rowJump, colJump){
     const squares = [];
+    const attacker = game.getPiece(source);
+    if(attacker == null) return squares;
+    let {r,c} = source;
+    r += rowJump; c += colJump;
+
     while (game.idxOnBoard(r, c)){
         const p = game.board[r][c];
-        if(p != null) break;
+        if(p != null){
+            if(attacker.color !== p.color) squares.push(fromTable(r,c).fr);
+            break;
+        }
         squares.push(fromTable(r,c).fr);
         r += rowJump; c += colJump;
     }
     return squares;
 }
 
-function walkStraight(game, fr){
-    const up = walk(game, fr, -1, 0);
-    const down = walk(game, fr, 1, 0);
-    const left = walk(game, fr, 0, -1);
-    const right = walk(game, fr, 0, 1);
+function walkStraight(game, source){
+    const up = walk(game, source, -1, 0);
+    const down = walk(game, source, 1, 0);
+    const left = walk(game, source, 0, -1);
+    const right = walk(game, source, 0, 1);
     return [].concat(up, down, left, right);
 }
 
-function walkDiagonal(game, fr){
-    const up_left = walk(game, fr, -1, -1);
-    const up_right = walk(game, fr, 1, -1);
-    const down_left = walk(game, fr, -1, 1);
-    const down_right = walk(game, fr, 1, 1);
+function walkDiagonal(game, source){
+    const up_left = walk(game, source, -1, -1);
+    const up_right = walk(game, source, 1, -1);
+    const down_left = walk(game, source, -1, 1);
+    const down_right = walk(game, source, 1, 1);
     return [].concat(up_left, up_right, down_left, down_right);
 }
 

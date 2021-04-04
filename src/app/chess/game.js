@@ -33,9 +33,21 @@ class Game {
 
     }
 
-    getPiece(fr){
-        const cord = core.Index.fromChess(fr);
-        return this.board[cord.r][cord.c];
+    getPiece(idx){
+        return this.board[idx.r][idx.c];
+    }
+
+    setPiece(p, idx){
+        this.board[idx.r][idx.c] = p;
+    }
+
+    move(source, target){
+        this.board[target.r][target.c] = this.board[source.r][source.c];
+        this.board[source.r][source.c] = null;
+    }
+
+    clone(source, target){
+        this.board[target.r][target.c] = this.board[source.r][source.c];
     }
 
     idxOnBoard(r, c){
@@ -43,6 +55,8 @@ class Game {
     }
 
     init(){
+        this.moveCounter = 1;
+        this.turn = 0;
         for(let i=0; i<this.size; ++i){
             this.board[1][i] = new Pawn(Color.BLACK);
             this.board[6][i] = new Pawn(Color.WHITE);
