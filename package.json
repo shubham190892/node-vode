@@ -1,7 +1,11 @@
 {
   "name": "node-vode",
   "version": "1.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "ramda": "^0.27.0",
+    "rewire": "^5.0.0",
+    "performance-now": "^2.1.0"
+  },
   "devDependencies": {
     "jest": "^26.6.3"
   },
