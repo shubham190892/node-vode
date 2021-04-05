@@ -1,15 +1,15 @@
 class Node {
-    value;
-    left;
-    right;
+  value;
+  left;
+  right;
 
-    constructor(value) {
-        this.value = value;
-        this.left = null;
-        this.right = null;
-    }
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
 }
 
 module.exports = {
-	Node: Node
+  Node: Node
 };

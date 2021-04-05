@@ -10,18 +10,12 @@
  ==============================================================================
  */
 
-function distanceLookUp() {
+function distanceLookUp() {}
 
-}
+function findNode() {}
 
-function findNode() {
-
-}
-
-function solve() {
-
-}
+function solve() {}
 
 module.exports = {
-	solve: solve
+  solve: solve
 };

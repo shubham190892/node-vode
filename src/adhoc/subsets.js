@@ -10,18 +10,18 @@
  */
 
 function solve(items) {
-    if(items.length === 0) return [[]];
-    const e = items[0];
-    const rem = items.slice(1);
-    const remSubSets = solve(rem);
-    const allSubSets = [];
-    for(const s of remSubSets){
-        allSubSets.push(s);
-        allSubSets.push([...s, e]);
-    }
-    return allSubSets;
+  if (items.length === 0) return [[]];
+  const e = items[0];
+  const rem = items.slice(1);
+  const remSubSets = solve(rem);
+  const allSubSets = [];
+  for (const s of remSubSets) {
+    allSubSets.push(s);
+    allSubSets.push([...s, e]);
+  }
+  return allSubSets;
 }
 
 module.exports = {
-    solve: solve
+  solve: solve
 };
