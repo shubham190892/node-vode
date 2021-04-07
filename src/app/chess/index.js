@@ -9,7 +9,7 @@ const rl = readline.createInterface({
 });
 
 function gameLoop(game) {
-  const cmdText = `Move ${Math.floor((game.moveCounter + 1) / 2)} -> ${
+  const cmdText = `Move ${game.getMoveNumber()} -> ${
     game.turn === 0 ? "White's" : "Black's"
   } Turn: `;
   rl.question(cmdText, function (cmd) {

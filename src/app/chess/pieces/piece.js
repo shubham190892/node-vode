@@ -11,11 +11,11 @@ class Piece {
     this.notation = (color === Color.WHITE ? 'w' : 'b') + symbol;
   }
 
-  normalizeIndex(r, c) {
-    return `${r},${c}`;
+  attack(game, source) {
+    return new Set();
   }
 
-  attack(game, source) {
+  getLegalMoves(game, source) {
     return new Set();
   }
 

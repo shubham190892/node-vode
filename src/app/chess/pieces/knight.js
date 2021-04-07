@@ -1,4 +1,5 @@
 const Piece = require('./piece').Piece;
+const core = require('../core');
 const directions = [
   {rj: 2, cj: -1},
   {rj: 2, cj: 1},
@@ -16,9 +17,15 @@ class Knight extends Piece {
   }
   attack(game, source) {
     const squares = new Set();
-    const knight = game.getPiece(source);
-
+    for (const d of directions) {
+      const target = core.jump(game, source, d);
+      if (target != null) squares.add(target.fr);
+    }
     return squares;
+  }
+
+  getLegalMoves(game, source) {
+    return this.attack(game, source);
   }
 }
 

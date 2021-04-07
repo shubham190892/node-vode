@@ -59,10 +59,26 @@ function validatePin(game, tokens) {
   return res;
 }
 
-function validateCheckDefence() {
-  console.log('Call: validatePin');
+function validateCheckDefence(game, tokens) {
+  console.log('Call: validateCheckDefence');
   const res = {status: true, code: ''};
-  return true;
+  if (core.checkAttackOnKing(game)) {
+    const source = core.Index.fromChess(tokens[0]);
+    const target = core.Index.fromChess(tokens[1]);
+    game.move(source, target);
+    if (core.checkAttackOnKing(game)) {
+      res.status = false;
+      res.code = 'KING_IN_CHECK';
+    }
+    game.move(target, source);
+  }
+  return res;
+}
+
+function validatePieceRule(game, tokens) {
+  console.log('Call: validatePieceRule');
+  const res = {status: true, code: ''};
+  return res;
 }
 
 module.exports = {

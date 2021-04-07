@@ -26,7 +26,12 @@ function validate(cmd, game, tokens) {
 
 function move(cmd, game, tokens) {
   if (cmd.type === 1) return;
-  game.move(core.Index.fromChess(tokens[0]), core.Index.fromChess(tokens[1]));
+  const source = core.Index.fromChess(tokens[0]);
+  const sp = game.getPiece(source);
+  const target = core.Index.fromChess(tokens[1]);
+  const tp = game.getPiece(target);
+  game.history.push(new core.Move(game, source, sp, target, target));
+  game.move(source, target);
 }
 
 function calcGameStatus(game) {

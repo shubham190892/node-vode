@@ -12,6 +12,10 @@ class Queen extends Piece {
     );
     return new Set(squares);
   }
+
+  getLegalMoves(game, source) {
+    return this.attack(game, source);
+  }
 }
 
 module.exports = {

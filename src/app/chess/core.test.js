@@ -137,3 +137,31 @@ describe('walkDiagonal', () => {
     expect(squares).toEqual(['e5', 'd6', 'c7', 'e3', 'g5', 'h6', 'g3']);
   });
 });
+
+describe('checkAttackOnKing', () => {
+  it('King in check: True', () => {
+    const g = new Game();
+    g.init();
+    g.move(c.FR.e2, c.FR.h2);
+    g.move(c.FR.e7, c.FR.h7);
+    g.move(c.FR.d8, c.FR.e8);
+    g.displayBoard();
+    expect(c.checkAttackOnKing(g)).toBeTruthy();
+    g.init();
+    g.move(c.FR.b8, c.FR.d3);
+    g.displayBoard();
+    expect(c.checkAttackOnKing(g)).toBeTruthy();
+  });
+  it('King in check: False', () => {
+    const g = new Game();
+    g.init();
+    expect(c.checkAttackOnKing(g)).toBeFalsy();
+    g.turn = 1;
+    expect(c.checkAttackOnKing(g)).toBeFalsy();
+
+    g.init();
+    g.move(c.FR.b8, c.FR.c3);
+    g.displayBoard();
+    expect(c.checkAttackOnKing(g)).toBeFalsy();
+  });
+});

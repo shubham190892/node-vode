@@ -9,6 +9,10 @@ class Bishop extends Piece {
   attack(game, source) {
     return new Set(core.walkDiagonal(game, source));
   }
+
+  getLegalMoves(game, source) {
+    return this.attack(game, source);
+  }
 }
 
 module.exports = {

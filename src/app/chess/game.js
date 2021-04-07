@@ -17,12 +17,15 @@ class Game {
   turn;
   whitePlayerId;
   blackPlayerId;
+  history;
+
   constructor(whitePlayerId, blackPlayerId) {
     this.whitePlayerId = whitePlayerId;
     this.blackPlayerId = blackPlayerId;
     this.moveCounter = 1;
     this.turn = 0;
     this.size = 8;
+    this.history = []
     this.board = new Array(this.size);
     for (let i = 0; i < this.size; ++i) {
       this.board[i] = [];
@@ -30,6 +33,10 @@ class Game {
         this.board[i].push(null);
       }
     }
+  }
+
+  getMoveNumber(){
+    return Math.floor((this.moveCounter + 1) / 2)
   }
 
   getPiece(idx) {
@@ -51,6 +58,15 @@ class Game {
 
   idxOnBoard(r, c) {
     return r >= 0 && r < this.size && c >= 0 && c < this.size;
+  }
+
+  getLastMove(){
+    if(this.history.length ===0) return null;
+    return this.history[this.history.length-1];
+  }
+
+  getTurnColor() {
+    return this.turn === 0 ? Color.WHITE : Color.BLACK;
   }
 
   init() {
@@ -77,10 +93,6 @@ class Game {
     this.board[7][5] = new Bishop(Color.WHITE);
     this.board[7][3] = new Queen(Color.WHITE);
     this.board[7][4] = new King(Color.WHITE);
-  }
-
-  getTurnColor() {
-    return this.turn === 0 ? Color.WHITE : Color.BLACK;
   }
 
   displayBoard() {

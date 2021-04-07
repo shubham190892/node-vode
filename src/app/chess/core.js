@@ -38,6 +38,28 @@ for (const f of Object.keys(File)) {
   }
 }
 
+class Move {
+  move;
+  turn;
+  source;
+  target;
+  piece;
+  capture;
+
+  constructor(game, source, sp, target, tp) {
+    this.move = game.getMoveNumber();
+    this.turn = game.getTurnColor();
+    this.source = source.fr;
+    this.target = target.fr;
+    this.piece = sp.symbol;
+    this.capture = tp == null ? null : tp.symbol;
+  }
+
+  toString(){
+    return `${this.move} (${this.source}:${this.piece} -> ${this.target}:${this.capture})`
+  }
+}
+
 const GameStatus = Object.freeze({
   CHECKMATE: 0,
   STALEMATE: 1,
@@ -184,6 +206,25 @@ function walkDiagonal(game, source) {
   return [].concat(up_left, up_right, down_left, down_right);
 }
 
+function checkAttackOnKing(game) {
+  const defender = game.turn === 0 ? 'white' : 'black';
+  const scanRes = scan(game, {[defender]: ['K']});
+  const king = scanRes[defender]['King'];
+  for (let r = 0; r < game.size; r++) {
+    for (let c = 0; c < game.size; ++c) {
+      const p = game.board[r][c];
+      if (p == null || p.symbol === 'K' || p.color.toLowerCase() === defender) {
+        continue;
+      }
+      const squares = p.attack(game, fromTable(r, c));
+      if (squares.has(king)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 module.exports = {
   Color: Color,
   Emoji: Emoji,
@@ -196,5 +237,7 @@ module.exports = {
   FR: FileRank,
   walkStraight: walkStraight,
   walkDiagonal: walkDiagonal,
-  jump: jump
+  jump: jump,
+  checkAttackOnKing: checkAttackOnKing,
+  Move: Move
 };

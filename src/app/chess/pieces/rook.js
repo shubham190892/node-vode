@@ -9,6 +9,10 @@ class Rook extends Piece {
   attack(game, source) {
     return new Set(core.walkStraight(game, source));
   }
+
+  getLegalMoves(game, source) {
+    return this.attack(game, source);
+  }
 }
 
 module.exports = {
