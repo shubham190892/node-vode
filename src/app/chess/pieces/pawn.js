@@ -16,15 +16,15 @@ const Direction = {
   }
 };
 
-function checkEnPassant(game, idx){
+function checkEnPassant(game, idx) {
   const lastMove = game.getLastMove();
-  if(lastMove == null) return false;
-  if(lastMove.piece !== 'P') return false;
+  if (lastMove == null) return false;
+  if (lastMove.piece !== 'P') return false;
   const source = core.Index.fromChess(lastMove.source);
   const target = core.Index.fromChess(lastMove.target);
-  if(source.c !== idx.c || target.c !== idx.c) return false;
+  if (source.c !== idx.c || target.c !== idx.c) return false;
   const steps = Math.abs(source.r - target.r);
-  if(steps !== 2) return false;
+  if (steps !== 2) return false;
   return true;
 }
 
@@ -66,13 +66,13 @@ class Pawn extends Piece {
     }
 
     const attackingSquares = this.attack(game, source);
-    for(const a of attackingSquares){
-      const idx = core.Index.fromChess(a)
+    for (const a of attackingSquares) {
+      const idx = core.Index.fromChess(a);
       const tp = game.getPiece(idx);
-      if(tp != null){
+      if (tp != null) {
         squares.add(a);
-      } else{
-        if(checkEnPassant(game, idx)){
+      } else {
+        if (checkEnPassant(game, idx)) {
           squares.add(a);
         }
       }

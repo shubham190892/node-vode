@@ -21,7 +21,6 @@ describe('pawn attack', () => {
   });
 });
 
-
 describe('getLegalMoves', () => {
   it('should return all legal squares for a pawn', () => {
     const g = new Game();

@@ -55,8 +55,8 @@ class Move {
     this.capture = tp == null ? null : tp.symbol;
   }
 
-  toString(){
-    return `${this.move} (${this.source}:${this.piece} -> ${this.target}:${this.capture})`
+  toString() {
+    return `${this.move} (${this.source}:${this.piece} -> ${this.target}:${this.capture})`;
   }
 }
 

@@ -25,7 +25,7 @@ class Game {
     this.moveCounter = 1;
     this.turn = 0;
     this.size = 8;
-    this.history = []
+    this.history = [];
     this.board = new Array(this.size);
     for (let i = 0; i < this.size; ++i) {
       this.board[i] = [];
@@ -35,8 +35,8 @@ class Game {
     }
   }
 
-  getMoveNumber(){
-    return Math.floor((this.moveCounter + 1) / 2)
+  getMoveNumber() {
+    return Math.floor((this.moveCounter + 1) / 2);
   }
 
   getPiece(idx) {
@@ -60,9 +60,9 @@ class Game {
     return r >= 0 && r < this.size && c >= 0 && c < this.size;
   }
 
-  getLastMove(){
-    if(this.history.length ===0) return null;
-    return this.history[this.history.length-1];
+  getLastMove() {
+    if (this.history.length === 0) return null;
+    return this.history[this.history.length - 1];
   }
 
   getTurnColor() {
