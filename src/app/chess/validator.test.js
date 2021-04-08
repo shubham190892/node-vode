@@ -108,9 +108,9 @@ describe('validateCheckDefence', () => {
     const ans = {status: false, code: 'KING_IN_CHECK'};
     const g = new Game();
     g.init();
-    g.move(core.FR.e2, core.FR.h3);
-    g.move(core.FR.e7, core.FR.h7);
-    g.move(core.FR.d8, core.FR.e8);
+    g.migrate(core.FR.e2, core.FR.h3);
+    g.migrate(core.FR.e7, core.FR.h7);
+    g.migrate(core.FR.d8, core.FR.e8);
     let out = validateCheckDefence(g, ['h3', 'h4']);
     expect(out).toEqual(ans);
   });
@@ -122,9 +122,9 @@ describe('validateCheckDefence', () => {
     expect(out).toEqual(ans);
 
     g.init();
-    g.move(core.FR.e2, core.FR.h4);
-    g.move(core.FR.e7, core.FR.h6);
-    g.move(core.FR.d8, core.FR.e8);
+    g.migrate(core.FR.e2, core.FR.h4);
+    g.migrate(core.FR.e7, core.FR.h6);
+    g.migrate(core.FR.d8, core.FR.e8);
     out = validateCheckDefence(g, ['h4', 'e2']);
     expect(out).toEqual(ans);
   });

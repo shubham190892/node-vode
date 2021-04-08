@@ -15,8 +15,8 @@ class Piece {
     return new Set();
   }
 
-  getLegalMoves(game, source) {
-    return new Set();
+  checkMoveLegal(game, source, target) {
+    return true;
   }
 
   toString() {

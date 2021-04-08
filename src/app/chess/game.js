@@ -47,7 +47,7 @@ class Game {
     this.board[idx.r][idx.c] = p;
   }
 
-  move(source, target) {
+  migrate(source, target) {
     this.board[target.r][target.c] = this.board[source.r][source.c];
     this.board[source.r][source.c] = null;
   }

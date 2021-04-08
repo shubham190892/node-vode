@@ -31,7 +31,7 @@ function move(cmd, game, tokens) {
   const target = core.Index.fromChess(tokens[1]);
   const tp = game.getPiece(target);
   game.history.push(new core.Move(game, source, sp, target, target));
-  game.move(source, target);
+  game.migrate(source, target);
 }
 
 function calcGameStatus(game) {

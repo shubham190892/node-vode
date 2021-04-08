@@ -43,7 +43,7 @@ class Pawn extends Piece {
     return squares;
   }
 
-  getLegalMoves(game, source) {
+  checkMoveLegal(game, source, target) {
     const squares = new Set();
     const pawn = game.getPiece(source);
     const direction = Direction[pawn.color];
@@ -64,7 +64,6 @@ class Pawn extends Piece {
         }
       }
     }
-
     const attackingSquares = this.attack(game, source);
     for (const a of attackingSquares) {
       const idx = core.Index.fromChess(a);
@@ -77,7 +76,7 @@ class Pawn extends Piece {
         }
       }
     }
-    return squares;
+    return squares.has(target.fr);
   }
 }
 

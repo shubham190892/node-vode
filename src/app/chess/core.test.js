@@ -1,5 +1,6 @@
 const rewire = require('rewire');
 const c = require('./core');
+const FR = c.FR;
 const r_c = rewire('./core');
 
 const Game = require('./game').Game;
@@ -142,13 +143,13 @@ describe('checkAttackOnKing', () => {
   it('King in check: True', () => {
     const g = new Game();
     g.init();
-    g.move(c.FR.e2, c.FR.h2);
-    g.move(c.FR.e7, c.FR.h7);
-    g.move(c.FR.d8, c.FR.e8);
+    g.migrate(c.FR.e2, c.FR.h2);
+    g.migrate(c.FR.e7, c.FR.h7);
+    g.migrate(c.FR.d8, c.FR.e8);
     g.displayBoard();
     expect(c.checkAttackOnKing(g)).toBeTruthy();
     g.init();
-    g.move(c.FR.b8, c.FR.d3);
+    g.migrate(c.FR.b8, c.FR.d3);
     g.displayBoard();
     expect(c.checkAttackOnKing(g)).toBeTruthy();
   });
@@ -160,8 +161,44 @@ describe('checkAttackOnKing', () => {
     expect(c.checkAttackOnKing(g)).toBeFalsy();
 
     g.init();
-    g.move(c.FR.b8, c.FR.c3);
+    g.migrate(c.FR.b8, c.FR.c3);
     g.displayBoard();
     expect(c.checkAttackOnKing(g)).toBeFalsy();
+  });
+});
+
+describe('getAttackedSquares', () => {
+  it('should return all squares attacked by opponent', () => {
+    const g = new Game();
+    g.init();
+    let out = c.getAttackedSquares(g);
+    expect(out).toEqual(
+      new Set(['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6'])
+    );
+
+    g.migrate(FR.d8, FR.d6);
+    out = c.getAttackedSquares(g);
+    const ans = [
+      'a6',
+      'c6',
+      'd8',
+      'f6',
+      'h6',
+      'b6',
+      'e6',
+      'g6',
+      'd5',
+      'd4',
+      'd3',
+      'd2',
+      'c5',
+      'b4',
+      'a3',
+      'e5',
+      'f4',
+      'g3',
+      'h2'
+    ];
+    expect(out).toEqual(new Set(ans));
   });
 });

@@ -22,7 +22,7 @@ function gameLoop(game) {
         rl.close();
         process.exit();
       }
-      game.moveCounter++;
+      game.migrateCounter++;
       game.turn = game.turn ^ 1;
       gameLoop(game);
     } else {

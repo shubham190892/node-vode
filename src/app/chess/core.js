@@ -206,6 +206,22 @@ function walkDiagonal(game, source) {
   return [].concat(up_left, up_right, down_left, down_right);
 }
 
+function getAttackedSquares(game) {
+  const defender = game.turn === 0 ? 'white' : 'black';
+  const attackedSquares = new Set();
+  for (let r = 0; r < game.size; r++) {
+    for (let c = 0; c < game.size; ++c) {
+      const p = game.board[r][c];
+      if (p == null || p.color.toLowerCase() === defender) {
+        continue;
+      }
+      const squares = p.attack(game, fromTable(r, c));
+      for (const s of squares) attackedSquares.add(s);
+    }
+  }
+  return attackedSquares;
+}
+
 function checkAttackOnKing(game) {
   const defender = game.turn === 0 ? 'white' : 'black';
   const scanRes = scan(game, {[defender]: ['K']});
@@ -239,5 +255,6 @@ module.exports = {
   walkDiagonal: walkDiagonal,
   jump: jump,
   checkAttackOnKing: checkAttackOnKing,
+  getAttackedSquares: getAttackedSquares,
   Move: Move
 };
