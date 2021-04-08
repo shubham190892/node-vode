@@ -86,6 +86,7 @@ module.exports = {
     validateSource,
     validateTarget,
     validateCheckDefence,
-    validatePin
+    validatePin,
+    validatePieceRule
   ]
 };

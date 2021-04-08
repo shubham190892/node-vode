@@ -13,19 +13,21 @@ const directions = [
 ];
 
 function checkRookLift(game, kingFR, rookFR) {
+  //console.log('Check rook lift', kingFR, rookFR);
   const kingIdx = core.Index.fromChess(kingFR);
   const rookIdx = core.Index.fromChess(rookFR);
   let rook = game.getPiece(rookIdx);
   if (rook == null || game.getTurnColor() !== rook.color) return false;
-  const slide = rookFR.c === 0 ? -1 : 1;
+  //console.log('Check flyway');
+  const slide = rookIdx.c === 0 ? -1 : 1;
   let {r, c} = kingIdx;
   c += slide;
-  while (c > 0 || c < game.size - 1) {
+  while (c > 0 && c < game.size - 1) {
     const idx = core.Index.fromTable(r, c);
     if (game.getPiece(idx) != null) return false;
     c += slide;
   }
-
+  //console.log('Check security');
   r = kingIdx.r;
   c = kingIdx.c;
   const attackedSquares = core.getAttackedSquares(game);
@@ -33,7 +35,7 @@ function checkRookLift(game, kingFR, rookFR) {
     if (attackedSquares.has(core.Index.fromTable(r, c).fr)) return false;
     c += slide;
   }
-
+  //console.log('Check security');
   let top = game.history.length - 1;
   while (top >= 0) {
     const m = game.history[top];
@@ -68,11 +70,19 @@ class King extends Piece {
   }
 
   checkMoveLegal(game, source, target) {
+    const controllingSquares = this.attack(game, source);
     const attackedSquares = core.getAttackedSquares(game);
-    if (attackedSquares.has(target.fr)) return true;
+
     const fd = Math.abs(source.c - target.c);
     if (fd === 2 && source.r === target.r) {
+      //console.log('Checking castling rule');
       if (checkCastleRule(game, source, target)) return true;
+    }else{
+      if(controllingSquares.has(target.fr)){
+        if(!attackedSquares.has(target.fr)){
+          return true;
+        }
+      }
     }
     return false;
   }
