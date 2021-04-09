@@ -16,7 +16,14 @@ class Piece {
   }
 
   checkMoveLegal(game, source, target) {
-    return false;
+    const p = game.getPiece(source);
+    return p.attack(game, source).has(target.fr);
+  }
+
+  move(game, source, target) {
+    const tp = game.getPiece(target);
+    game.migrate(source, target);
+    return tp;
   }
 
   toString() {

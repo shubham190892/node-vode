@@ -78,6 +78,17 @@ class Pawn extends Piece {
     }
     return squares.has(target.fr);
   }
+
+  move(game, source, target) {
+    let tp = game.getPiece(target);
+    game.migrate(source, target);
+    if (tp == null && source.c !== target.c) {
+      const rj = game.turn === 0 ? 1 : -1;
+      tp = game.board[target.r + rj][target.c];
+      game.board[target.r + rj][target.c] = null;
+    }
+    return tp;
+  }
 }
 
 module.exports = {

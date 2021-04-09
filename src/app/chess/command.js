@@ -29,9 +29,8 @@ function move(cmd, game, tokens) {
   const source = core.Index.fromChess(tokens[0]);
   const sp = game.getPiece(source);
   const target = core.Index.fromChess(tokens[1]);
-  const tp = game.getPiece(target);
-  game.history.push(new core.Move(game, source, sp, target, target));
-  game.migrate(source, target);
+  const tp = sp.move(game, source, target);
+  game.history.push(new core.Move(game, source, sp, target, tp));
 }
 
 function calcGameStatus(game) {

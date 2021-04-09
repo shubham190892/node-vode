@@ -57,3 +57,26 @@ describe('checkMoveLegal', () => {
     expect(out).toEqual(true);
   });
 });
+
+describe('Pawn move', () => {
+  it('Capture: True', () => {
+    const g = new Game();
+    g.init();
+    g.migrate(FR.d7, FR.d3);
+    let p = g.getPiece(FR.e2);
+    let out = p.move(g, FR.e2, FR.d3);
+    expect(out.name).toBe('Pawn');
+
+    g.init();
+    g.migrate(FR.e2, FR.e5);
+    g.migrate(FR.d7, FR.d5);
+    out = p.move(g, FR.e5, FR.d6);
+    expect(out.name).toBe('Pawn');
+  });
+  it('Capture: False', () => {
+    const g = new Game();
+    g.init();
+    let p = g.getPiece(FR.e2);
+    expect(p.move(g, FR.e2, FR.e3)).toEqual(null);
+  });
+});

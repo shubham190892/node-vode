@@ -23,10 +23,6 @@ class Knight extends Piece {
     }
     return squares;
   }
-
-  checkMoveLegal(game, source, target) {
-    return this.attack(game, source).has(target.fr);
-  }
 }
 
 module.exports = {
