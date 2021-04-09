@@ -70,9 +70,11 @@ describe('validatePin', () => {
     let ans = {status: false, code: 'PINNED_PIECE'};
     g.clone(d8, a5);
     // g.displayBoard();
+    g.setPiece(g.getPiece(FR.h8), FR.d4);
+    const tp = g.getPiece(FR.d4);
     let out = validatePin(g, ['d2', 'd4']);
     expect(out).toEqual(ans);
-
+    expect(g.getPiece(FR.d4).name).toBe(tp.name);
     g.init();
     g.clone(f8, a5);
     out = validatePin(g, ['d2', 'd4']);
@@ -113,8 +115,11 @@ describe('validateCheckDefence', () => {
     g.migrate(core.FR.e2, core.FR.h3);
     g.migrate(core.FR.e7, core.FR.h7);
     g.migrate(core.FR.d8, core.FR.e8);
+    g.setPiece(g.getPiece(FR.h8), FR.h4);
+    const tp = g.getPiece(FR.h4);
     let out = validateCheckDefence(g, ['h3', 'h4']);
     expect(out).toEqual(ans);
+    expect(g.getPiece(FR.h4).name).toBe(tp.name);
   });
   it('Check: True', () => {
     const ans = {status: true, code: ''};

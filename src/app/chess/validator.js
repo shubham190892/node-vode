@@ -42,6 +42,7 @@ function validatePin(game, tokens) {
     [active]: ['K'],
     [passive]: ['Q', 'R', 'B']
   });
+  const tp = game.getPiece(target);
   game.migrate(source, target);
   const attackSources = Object.keys(scanRes[passive]['squares']);
   for (const a of attackSources) {
@@ -54,8 +55,8 @@ function validatePin(game, tokens) {
       break;
     }
   }
-
   game.migrate(target, source);
+  game.setPiece(tp, target);
   return res;
 }
 
@@ -65,12 +66,14 @@ function validateCheckDefence(game, tokens) {
   if (core.checkAttackOnKing(game)) {
     const source = core.Index.fromChess(tokens[0]);
     const target = core.Index.fromChess(tokens[1]);
+    const tp = game.getPiece(target);
     game.migrate(source, target);
     if (core.checkAttackOnKing(game)) {
       res.status = false;
       res.code = 'KING_IN_CHECK';
     }
     game.migrate(target, source);
+    game.setPiece(tp, target);
   }
   return res;
 }
