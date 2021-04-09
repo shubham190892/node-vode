@@ -13,8 +13,8 @@ class Queen extends Piece {
     return new Set(squares);
   }
 
-  getLegalMoves(game, source) {
-    return this.attack(game, source);
+  checkMoveLegal(game, source, target) {
+    return this.attack(game, source).has(target.fr);
   }
 }
 

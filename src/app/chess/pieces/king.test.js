@@ -67,6 +67,4 @@ describe('King checkMoveLegal', () => {
     //g.displayBoard();
     expect(king.checkMoveLegal(g, FR.e1, FR.g1)).toBeFalsy();
   });
-
-
 });

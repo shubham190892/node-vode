@@ -24,8 +24,8 @@ class Knight extends Piece {
     return squares;
   }
 
-  getLegalMoves(game, source) {
-    return this.attack(game, source);
+  checkMoveLegal(game, source, target) {
+    return this.attack(game, source).has(target.fr);
   }
 }
 

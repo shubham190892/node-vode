@@ -16,7 +16,7 @@ class Piece {
   }
 
   checkMoveLegal(game, source, target) {
-    return true;
+    return false;
   }
 
   toString() {

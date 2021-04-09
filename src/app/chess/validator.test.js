@@ -2,6 +2,8 @@ const rewire = require('rewire');
 const Game = require('./game').Game;
 const core = require('./core');
 
+const FR = core.FR;
+
 const r_v = rewire('./validator');
 const a5 = core.Index.fromChess('a5');
 const a8 = core.Index.fromChess('a8');
@@ -132,6 +134,18 @@ describe('validateCheckDefence', () => {
 
 describe('validatePieceRule', () => {
   const validatePieceRule = r_v.__get__('validatePieceRule');
-  it('validatePieceRule: True', () => {});
-  it('validatePieceRule: False', () => {});
+  it('validatePieceRule: True', () => {
+    const g = new Game();
+    g.init();
+    expect(validatePieceRule(g, ['e2', 'e3'])).toBeTruthy();
+    expect(validatePieceRule(g, ['b1', 'c3'])).toBeTruthy();
+  });
+  it('validatePieceRule: False', () => {
+    const ans = {code: 'ILLEGAL_PIECE_MOVE', status: false};
+    const g = new Game();
+    g.init();
+    expect(validatePieceRule(g, ['e2', 'd3'])).toEqual(ans);
+    // g.displayBoard();
+    expect(validatePieceRule(g, ['d1', 'd3'])).toEqual(ans);
+  });
 });

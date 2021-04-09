@@ -1,7 +1,7 @@
 const core = require('./core');
 
 function validateSource(game, tokens) {
-  console.log('Call: validateSource');
+  //console.log('Call: validateSource');
   const res = {status: false, code: ''};
   const p = game.getPiece(core.Index.fromChess(tokens[0]));
   if (p == null) {
@@ -15,7 +15,7 @@ function validateSource(game, tokens) {
 }
 
 function validateTarget(game, tokens) {
-  console.log('Call: validateTarget');
+  //console.log('Call: validateTarget');
   const res = {status: true, code: ''};
   const p = game.getPiece(core.Index.fromChess(tokens[1]));
   if (p == null) return res;
@@ -32,7 +32,7 @@ function validateTarget(game, tokens) {
 }
 
 function validatePin(game, tokens) {
-  console.log('Call: validatePin');
+  //console.log('Call: validatePin');
   const source = core.Index.fromChess(tokens[0]);
   const target = core.Index.fromChess(tokens[1]);
   const res = {status: true, code: ''};
@@ -60,7 +60,7 @@ function validatePin(game, tokens) {
 }
 
 function validateCheckDefence(game, tokens) {
-  console.log('Call: validateCheckDefence');
+  //console.log('Call: validateCheckDefence');
   const res = {status: true, code: ''};
   if (core.checkAttackOnKing(game)) {
     const source = core.Index.fromChess(tokens[0]);
@@ -76,8 +76,15 @@ function validateCheckDefence(game, tokens) {
 }
 
 function validatePieceRule(game, tokens) {
-  console.log('Call: validatePieceRule');
+  //console.log('Call: validatePieceRule');
   const res = {status: true, code: ''};
+  const source = core.Index.fromChess(tokens[0]);
+  const target = core.Index.fromChess(tokens[1]);
+  const piece = game.getPiece(source);
+  if (!piece.checkMoveLegal(game, source, target)) {
+    res.status = false;
+    res.code = 'ILLEGAL_PIECE_MOVE';
+  }
   return res;
 }
 

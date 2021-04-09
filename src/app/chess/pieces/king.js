@@ -77,9 +77,9 @@ class King extends Piece {
     if (fd === 2 && source.r === target.r) {
       //console.log('Checking castling rule');
       if (checkCastleRule(game, source, target)) return true;
-    }else{
-      if(controllingSquares.has(target.fr)){
-        if(!attackedSquares.has(target.fr)){
+    } else {
+      if (controllingSquares.has(target.fr)) {
+        if (!attackedSquares.has(target.fr)) {
           return true;
         }
       }
