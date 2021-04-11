@@ -45,6 +45,7 @@ class Move {
   target;
   piece;
   capture;
+  snapshot;
 
   constructor(game, source, sp, target, tp) {
     this.move = game.getMoveNumber();
@@ -53,6 +54,7 @@ class Move {
     this.target = target.fr;
     this.piece = sp.symbol;
     this.capture = tp == null ? null : tp.symbol;
+    this.snapshot = game.getSnapshot();
   }
 
   toString() {
@@ -309,18 +311,7 @@ function checkDrawByInsufficientMaterial(game) {
 }
 
 function checkMovePawnOrCapture(move) {
-  return move.piece.symbol === 'P' || move.capture != null;
-}
-
-function getSnapKey(game) {
-  const keys = [];
-  for (let r = 0; r < game.size; r++) {
-    for (let c = 0; c < game.size; ++c) {
-      const p = game.board[r][c];
-      keys.push(p == null ? '#' : p.notation);
-    }
-  }
-  return keys.join('');
+  return move.piece === 'P' || move.capture != null;
 }
 
 function checkDrawBy3FoldRepetition(game) {
@@ -329,7 +320,7 @@ function checkDrawBy3FoldRepetition(game) {
   while (top >= 0) {
     const m = game.history[top--];
     if (checkMovePawnOrCapture(m)) return false;
-    const k = getSnapKey(game);
+    const k = m.snapshot;
     if (repeat[k]) {
       repeat[k]++;
       if (repeat[k] === 3) return true;

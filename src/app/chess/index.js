@@ -56,6 +56,7 @@ function gameLoop(game) {
 }
 
 function start(game) {
+  game.init();
   game.displayBoard();
   gameLoop(game);
 }

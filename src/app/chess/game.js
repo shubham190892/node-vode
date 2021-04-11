@@ -72,6 +72,16 @@ class Game {
   getTurnColor() {
     return this.turn === 0 ? Color.WHITE : Color.BLACK;
   }
+  getSnapshot() {
+    const keys = [];
+    for (let r = 0; r < this.size; r++) {
+      for (let c = 0; c < this.size; ++c) {
+        const p = this.board[r][c];
+        keys.push(p == null ? '#' : p.notation);
+      }
+    }
+    return keys.join('');
+  }
 
   init() {
     this.moveCounter = 1;
