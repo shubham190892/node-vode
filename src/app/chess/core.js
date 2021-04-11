@@ -68,7 +68,7 @@ const GameStatus = Object.freeze({
   DRAW_BY_50_MOVE_RULE: 4,
   DRAW_BY_INSUFFICIENT_MATERIAL: 5,
   RESIGNATION: 6,
-  LOST_ON_TIME: 7,
+  TIME_ZERO: 7,
   LIVE: 100
 });
 
@@ -239,6 +239,22 @@ function checkAttackOnKing(game) {
     }
   }
   return false;
+}
+
+function checkStalemate(game){
+  for(let r=0; r<game.size; ++r){
+    for(let c=0; c<game.size; ++c){
+      const idx = fromTable(r,c);
+      const p = game.getPiece(idx);
+      if(game.getTurnColor() !== p.color) continue;
+      if(p.getLegalMoves(game, idx).size > 0) return false;
+    }
+  }
+  return true;
+}
+
+function checkCheckmate(game){
+ return  checkAttackOnKing(game) && checkAttackOnKing(game);
 }
 
 module.exports = {

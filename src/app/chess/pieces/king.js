@@ -48,9 +48,9 @@ function checkRookLift(game, kingFR, rookFR) {
 
 function checkCastleRule(game, source, target) {
   let rook = null;
-  if (source.fr === 'e1') {
+  if (source.fr === 'e1' && game.turn === 0) {
     rook = target.fr === 'g1' ? 'h1' : 'a1';
-  } else if (source.fr === 'e8') {
+  } else if (source.fr === 'e8' && game.turn === 1) {
     rook = target.fr === 'g8' ? 'h8' : 'a8';
   }
   return rook !== null && checkRookLift(game, source.fr, rook);
@@ -69,22 +69,19 @@ class King extends Piece {
     return squares;
   }
 
-  checkMoveLegal(game, source, target) {
-    const controllingSquares = this.attack(game, source);
+  getLegalMoves(game, source){
+    let legalJump = this.attack(game, source);
     const attackedSquares = core.getAttackedSquares(game);
-
-    const fd = Math.abs(source.c - target.c);
-    if (fd === 2 && source.r === target.r) {
-      //console.log('Checking castling rule');
-      if (checkCastleRule(game, source, target)) return true;
-    } else {
-      if (controllingSquares.has(target.fr)) {
-        if (!attackedSquares.has(target.fr)) {
-          return true;
-        }
-      }
-    }
-    return false;
+    legalJump = [...legalJump].filter(s => !attackedSquares.has(s));
+    legalJump = new Set(legalJump);
+    if(checkCastleRule(game, source, core.FR.g1)) legalJump.add('g1');
+    if(checkCastleRule(game, source, core.FR.c1)) legalJump.add('c1');
+    if(checkCastleRule(game, source, core.FR.g8)) legalJump.add('g8');
+    if(checkCastleRule(game, source, core.FR.c8)) legalJump.add('c8');
+    return legalJump;
+  }
+  checkMoveLegal(game, source, target) {
+    return this.getLegalMoves(game, source).has(target.fr);
   }
 }
 

@@ -22,8 +22,8 @@ function gameLoop(game) {
         rl.close();
         process.exit();
       }
-      game.migrateCounter++;
-      game.turn = game.turn ^ 1;
+      game.moveCounter++;
+      game.switchTurn();
       gameLoop(game);
     } else {
       console.log('ERROR:', res.data.msg);

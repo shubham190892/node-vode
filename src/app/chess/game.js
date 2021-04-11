@@ -35,6 +35,10 @@ class Game {
     }
   }
 
+  switchTurn(){
+    this.turn = this.turn ^ 1;
+  }
+
   getMoveNumber() {
     return Math.floor((this.moveCounter + 1) / 2);
   }
@@ -93,6 +97,15 @@ class Game {
     this.board[7][5] = new Bishop(Color.WHITE);
     this.board[7][3] = new Queen(Color.WHITE);
     this.board[7][4] = new King(Color.WHITE);
+  }
+
+  reset(){
+    for (let r = 0; r < this.size; ++r) {
+      for (let c = 0; c < this.size; ++c) {
+        this.board[r][c] = null;
+      }
+    }
+    this.init();
   }
 
   displayBoard() {

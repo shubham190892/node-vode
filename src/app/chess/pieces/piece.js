@@ -15,9 +15,14 @@ class Piece {
     return new Set();
   }
 
+  getLegalMoves(game, source){
+    const p = game.getPiece(source);
+    return p.attack(game, source);
+  }
+
   checkMoveLegal(game, source, target) {
     const p = game.getPiece(source);
-    return p.attack(game, source).has(target.fr);
+    return p.getLegalMoves(game, source).has(target.fr);
   }
 
   move(game, source, target) {

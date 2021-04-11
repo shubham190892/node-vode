@@ -35,6 +35,9 @@ function validatePin(game, tokens) {
   //console.log('Call: validatePin');
   const source = core.Index.fromChess(tokens[0]);
   const target = core.Index.fromChess(tokens[1]);
+  const tp = game.getPiece(target);
+  game.migrate(source, target);
+
   const res = {status: true, code: ''};
   const active = game.turn === 0 ? 'white' : 'black';
   const passive = game.turn === 0 ? 'black' : 'white';
@@ -42,8 +45,6 @@ function validatePin(game, tokens) {
     [active]: ['K'],
     [passive]: ['Q', 'R', 'B']
   });
-  const tp = game.getPiece(target);
-  game.migrate(source, target);
   const attackSources = Object.keys(scanRes[passive]['squares']);
   for (const a of attackSources) {
     const idx = core.Index.fromChess(a);

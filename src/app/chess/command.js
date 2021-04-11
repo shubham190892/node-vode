@@ -33,7 +33,19 @@ function move(cmd, game, tokens) {
   game.history.push(new core.Move(game, source, sp, target, tp));
 }
 
-function calcGameStatus(game) {
+function calcGameStatus(cmd, game) {
+  if(cmd.type === 1){
+    switch (cmd) {
+      case 'draw':
+        return GS.DRAW_BY_AGREEMENT;
+      case 'resign':
+        return GS.RESIGNATION;
+      case 'time':
+        return GS.TIME_ZERO;
+    }
+  }
+  game.switchTurn();
+  game.switchTurn();
   return GS.LIVE;
 }
 
@@ -53,7 +65,7 @@ class Command {
       return new Result(false, {msg: v.code});
     }
     move(this, game, this.tokens);
-    const gs = calcGameStatus(game);
+    const gs = calcGameStatus(this, game);
     return new Result(true, {gameStatus: gs});
   }
 }

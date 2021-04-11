@@ -202,3 +202,12 @@ describe('getAttackedSquares', () => {
     expect(out).toEqual(new Set(ans));
   });
 });
+
+describe('checkStalemate', () => {
+  it('Stalemate: True', () => {
+
+  });
+  it('Stalemate: False', () => {
+
+  });
+});

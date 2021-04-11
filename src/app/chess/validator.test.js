@@ -79,6 +79,19 @@ describe('validatePin', () => {
     g.clone(f8, a5);
     out = validatePin(g, ['d2', 'd4']);
     expect(out).toEqual(ans);
+
+
+  });
+
+  it('Pin False, when attacker got captured', function () {
+    let ans = {status: true, code: ''};
+    const g = new Game();
+    g.init();
+    g.migrate(FR.d8, e7);
+    g.migrate(FR.d1, FR.e2);
+    //g.displayBoard();
+    out = validatePin(g, ['e2', 'e7']);
+    expect(out).toEqual(ans);
   });
 
   it('Pin: True', function () {
