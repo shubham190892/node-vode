@@ -204,10 +204,6 @@ describe('getAttackedSquares', () => {
 });
 
 describe('checkStalemate', () => {
-  it('Stalemate: True', () => {
-
-  });
-  it('Stalemate: False', () => {
-
-  });
+  it('Stalemate: True', () => {});
+  it('Stalemate: False', () => {});
 });

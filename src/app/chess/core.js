@@ -241,20 +241,20 @@ function checkAttackOnKing(game) {
   return false;
 }
 
-function checkStalemate(game){
-  for(let r=0; r<game.size; ++r){
-    for(let c=0; c<game.size; ++c){
-      const idx = fromTable(r,c);
+function checkStalemate(game) {
+  for (let r = 0; r < game.size; ++r) {
+    for (let c = 0; c < game.size; ++c) {
+      const idx = fromTable(r, c);
       const p = game.getPiece(idx);
-      if(game.getTurnColor() !== p.color) continue;
-      if(p.getLegalMoves(game, idx).size > 0) return false;
+      if (game.getTurnColor() !== p.color) continue;
+      if (p.getLegalMoves(game, idx).size > 0) return false;
     }
   }
   return true;
 }
 
-function checkCheckmate(game){
- return  checkAttackOnKing(game) && checkAttackOnKing(game);
+function checkCheckmate(game) {
+  return checkAttackOnKing(game) && checkAttackOnKing(game);
 }
 
 module.exports = {

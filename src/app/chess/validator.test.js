@@ -79,8 +79,6 @@ describe('validatePin', () => {
     g.clone(f8, a5);
     out = validatePin(g, ['d2', 'd4']);
     expect(out).toEqual(ans);
-
-
   });
 
   it('Pin False, when attacker got captured', function () {

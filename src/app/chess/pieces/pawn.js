@@ -43,7 +43,7 @@ class Pawn extends Piece {
     return squares;
   }
 
-  getLegalMoves(game, source){
+  getLegalMoves(game, source) {
     const squares = new Set();
     const pawn = game.getPiece(source);
     const direction = Direction[pawn.color];
@@ -54,8 +54,8 @@ class Pawn extends Piece {
     if (game.board[r][c] == null) {
       squares.add(core.Index.fromTable(r, c).fr);
       if (
-          (pawn.color === Color.WHITE && source.r === 6) ||
-          (pawn.color === Color.BLACK && source.r === 1)
+        (pawn.color === Color.WHITE && source.r === 6) ||
+        (pawn.color === Color.BLACK && source.r === 1)
       ) {
         r += direction.forward.rj;
         c += direction.forward.cj;

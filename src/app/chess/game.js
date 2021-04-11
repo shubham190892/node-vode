@@ -35,7 +35,7 @@ class Game {
     }
   }
 
-  switchTurn(){
+  switchTurn() {
     this.turn = this.turn ^ 1;
   }
 
@@ -99,7 +99,7 @@ class Game {
     this.board[7][4] = new King(Color.WHITE);
   }
 
-  reset(){
+  reset() {
     for (let r = 0; r < this.size; ++r) {
       for (let c = 0; c < this.size; ++c) {
         this.board[r][c] = null;

@@ -69,15 +69,15 @@ class King extends Piece {
     return squares;
   }
 
-  getLegalMoves(game, source){
+  getLegalMoves(game, source) {
     let legalJump = this.attack(game, source);
     const attackedSquares = core.getAttackedSquares(game);
     legalJump = [...legalJump].filter(s => !attackedSquares.has(s));
     legalJump = new Set(legalJump);
-    if(checkCastleRule(game, source, core.FR.g1)) legalJump.add('g1');
-    if(checkCastleRule(game, source, core.FR.c1)) legalJump.add('c1');
-    if(checkCastleRule(game, source, core.FR.g8)) legalJump.add('g8');
-    if(checkCastleRule(game, source, core.FR.c8)) legalJump.add('c8');
+    if (checkCastleRule(game, source, core.FR.g1)) legalJump.add('g1');
+    if (checkCastleRule(game, source, core.FR.c1)) legalJump.add('c1');
+    if (checkCastleRule(game, source, core.FR.g8)) legalJump.add('g8');
+    if (checkCastleRule(game, source, core.FR.c8)) legalJump.add('c8');
     return legalJump;
   }
   checkMoveLegal(game, source, target) {

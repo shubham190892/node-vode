@@ -34,7 +34,7 @@ function move(cmd, game, tokens) {
 }
 
 function calcGameStatus(cmd, game) {
-  if(cmd.type === 1){
+  if (cmd.type === 1) {
     switch (cmd) {
       case 'draw':
         return GS.DRAW_BY_AGREEMENT;

@@ -15,7 +15,7 @@ class Piece {
     return new Set();
   }
 
-  getLegalMoves(game, source){
+  getLegalMoves(game, source) {
     const p = game.getPiece(source);
     return p.attack(game, source);
   }
