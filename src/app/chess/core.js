@@ -246,7 +246,7 @@ function checkStalemate(game) {
     for (let c = 0; c < game.size; ++c) {
       const idx = fromTable(r, c);
       const p = game.getPiece(idx);
-      if (game.getTurnColor() !== p.color) continue;
+      if (p == null || game.getTurnColor() !== p.color) continue;
       if (p.getLegalMoves(game, idx).size > 0) return false;
     }
   }
@@ -272,5 +272,7 @@ module.exports = {
   jump: jump,
   checkAttackOnKing: checkAttackOnKing,
   getAttackedSquares: getAttackedSquares,
-  Move: Move
+  Move: Move,
+  checkStalemate: checkStalemate,
+  checkCheckmate: checkCheckmate
 };

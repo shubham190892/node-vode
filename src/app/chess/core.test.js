@@ -1,3 +1,10 @@
+const Pawn = require('./pieces/pawn').Pawn;
+const Rook = require('./pieces/rook').Rook;
+const Knight = require('./pieces/knight').Knight;
+const Bishop = require('./pieces/bishop').Bishop;
+const Queen = require('./pieces/queen').Queen;
+const King = require('./pieces/king').King;
+
 const rewire = require('rewire');
 const c = require('./core');
 const FR = c.FR;
@@ -204,6 +211,21 @@ describe('getAttackedSquares', () => {
 });
 
 describe('checkStalemate', () => {
-  it('Stalemate: True', () => {});
-  it('Stalemate: False', () => {});
+  it('Stalemate: True', () => {
+    const g = new Game();
+    g.setPiece(new King(c.Color.WHITE), FR.a1);
+    g.setPiece(new Queen(c.Color.BLACK), FR.c2);
+    expect(c.checkStalemate(g)).toBeTruthy();
+  });
+  it('Stalemate: False', () => {
+    let g = new Game();
+    g.init();
+    expect(c.checkStalemate(g)).toBeFalsy();
+
+    g = new Game();
+    g.setPiece(new King(c.Color.WHITE), FR.a1);
+    g.setPiece(new Queen(c.Color.BLACK), FR.c2);
+    g.switchTurn();
+    expect(c.checkStalemate(g)).toBeFalsy();
+  });
 });
