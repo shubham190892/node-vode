@@ -45,8 +45,20 @@ function calcGameStatus(cmd, game) {
     }
   }
   game.switchTurn();
+  let status = null;
+  if (core.checkCheckmate(game)) {
+    status = GS.CHECKMATE;
+  } else if (core.checkStalemate(game)) {
+    status = GS.STALEMATE;
+  } else if (core.checkDrawByInsufficientMaterial(game)) {
+    status = GS.DRAW_BY_INSUFFICIENT_MATERIAL;
+  } else if (core.checkDrawByFiftyMoveRule(game)) {
+    status = GS.DRAW_BY_50_MOVE_RULE;
+  } else if (core.checkDrawBy3FoldRepetition(game)) {
+    status = GS.DRAW_BY_3_FOLD_REPETITION;
+  }
   game.switchTurn();
-  return GS.LIVE;
+  return status == null ? GS.LIVE : status;
 }
 
 class Command {

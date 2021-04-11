@@ -229,3 +229,27 @@ describe('checkStalemate', () => {
     expect(c.checkStalemate(g)).toBeFalsy();
   });
 });
+
+describe('checkCheckmate', () => {
+  it('checkCheckmate: True', () => {
+    const g = new Game();
+    g.init();
+    g.migrate(FR.d8, FR.h4);
+    g.migrate(FR.g2, FR.g4);
+    g.migrate(FR.f2, FR.f3);
+    g.displayBoard();
+    expect(c.checkCheckmate(g)).toBeTruthy();
+  });
+  it('checkCheckmate: False', () => {
+    let g = new Game();
+    g.init();
+    expect(c.checkCheckmate(g)).toBeFalsy();
+
+    g = new Game();
+    g.init();
+    g.migrate(FR.g2, FR.g4);
+    g.migrate(FR.d8, FR.h4);
+    g.displayBoard();
+    expect(c.checkCheckmate(g)).toBeFalsy();
+  });
+});

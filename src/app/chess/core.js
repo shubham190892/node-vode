@@ -253,8 +253,108 @@ function checkStalemate(game) {
   return true;
 }
 
+function checkBlockingAttackOnKing(game, source, defender) {
+  for (let r = 0; r < game.size; r++) {
+    for (let c = 0; c < game.size; ++c) {
+      const p = game.board[r][c];
+      if (p == null || p.symbol === 'K' || p.color.toLowerCase() !== defender) {
+        continue;
+      }
+      const legalMoves = p.getLegalMoves(game, source);
+      for (const lm of legalMoves) {
+        const target = fromChess(lm);
+
+        const tp = game.getPiece(target);
+        game.migrate(source, target);
+        if (!checkAttackOnKing(game)) return true;
+        game.migrate(target, source);
+        game.setPiece(tp, target);
+      }
+    }
+  }
+  return false;
+}
+
 function checkCheckmate(game) {
-  return checkAttackOnKing(game) && checkAttackOnKing(game);
+  if (checkAttackOnKing(game)) {
+    const defender = game.turn === 0 ? 'white' : 'black';
+    const scanRes = scan(game, {[defender]: ['K']});
+    const kingFR = scanRes[defender]['King'];
+    const kingIdx = fromChess(kingFR);
+    const king = game.getPiece(kingIdx);
+    if (king.getLegalMoves(game, kingIdx).size === 0) {
+      if (!checkBlockingAttackOnKing(game, kingIdx, defender)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function checkDrawByInsufficientMaterial(game) {
+  let counter = {
+    [Color.WHITE]: 0,
+    [Color.BLACK]: 0
+  };
+  const pieces = new Set(['K', 'N', 'B']);
+  for (let r = 0; r < game.size; r++) {
+    for (let c = 0; c < game.size; ++c) {
+      const p = game.board[r][c];
+      if (p == null) continue;
+      if (!pieces.has(p.symbol)) return false;
+      counter[p.color]++;
+    }
+  }
+  return counter[Color.WHITE] < 3 && counter[Color.BLACK] < 3;
+}
+
+function checkMovePawnOrCapture(move) {
+  return move.piece.symbol === 'P' || move.capture != null;
+}
+
+function getSnapKey(game) {
+  const keys = [];
+  for (let r = 0; r < game.size; r++) {
+    for (let c = 0; c < game.size; ++c) {
+      const p = game.board[r][c];
+      keys.push(p == null ? '#' : p.notation);
+    }
+  }
+  return keys.join('');
+}
+
+function checkDrawBy3FoldRepetition(game) {
+  let top = game.history.length - 1;
+  let repeat = {};
+  while (top >= 0) {
+    const m = game.history[top--];
+    if (checkMovePawnOrCapture(m)) return false;
+    const k = getSnapKey(game);
+    if (repeat[k]) {
+      repeat[k]++;
+      if (repeat[k] === 3) return true;
+    } else {
+      repeat[k] = 1;
+    }
+  }
+  return false;
+}
+
+function checkDrawByFiftyMoveRule(game) {
+  let top = game.history.length;
+  if (top % 2 === 0 || top < 100) return false;
+  let c = 0;
+  while (top >= 0) {
+    const bm = game.history[top--];
+    const wm = game.history[top--];
+    if (checkMovePawnOrCapture(bm) || checkMovePawnOrCapture(wm)) {
+      return false;
+    } else {
+      c++;
+    }
+    if (c === 50) return true;
+  }
+  return false;
 }
 
 module.exports = {
@@ -274,5 +374,8 @@ module.exports = {
   getAttackedSquares: getAttackedSquares,
   Move: Move,
   checkStalemate: checkStalemate,
-  checkCheckmate: checkCheckmate
+  checkCheckmate: checkCheckmate,
+  checkDrawByFiftyMoveRule: checkDrawByFiftyMoveRule,
+  checkDrawBy3FoldRepetition: checkDrawBy3FoldRepetition,
+  checkDrawByInsufficientMaterial: checkDrawByInsufficientMaterial
 };
