@@ -90,7 +90,7 @@ const Emoji = Object.freeze({
     King: '♚'
   },
   Black: {
-    Square: ' ',
+    Square: '░',
     Pawn: '♙',
     Rook: '♖',
     Knight: '♘',
