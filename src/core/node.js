@@ -19,7 +19,7 @@ class ListNode {
   }
 }
 
-class DListNode extends ListNode{
+class DListNode extends ListNode {
   prev;
   constructor(value) {
     super(value);

@@ -7,13 +7,12 @@
  ==============================================================================
  */
 
-
-function reverse(head){
-  if(head === null) return head;
+function reverse(head) {
+  if (head === null) return head;
   let pre = null;
   let cur = head;
   let nxt = head.next;
-  while(nxt !== null){
+  while (nxt !== null) {
     cur.next = pre;
     pre = cur;
     cur = nxt;
@@ -25,4 +24,4 @@ function reverse(head){
 
 module.exports = {
   reverse: reverse
-}
+};
