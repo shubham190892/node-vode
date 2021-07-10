@@ -8,27 +8,27 @@
  ==============================================================================
  */
 
-const MAX = 1000000
+const MAX = 1000000;
 const MIN = -MAX;
 
-function isBST(node, min, max){
-  if(node === null) return true;
+function isBST(node, min, max) {
+  if (node === null) return true;
   const value = node.value;
-  if(value > min && value < max){
+  if (value > min && value < max) {
     const leftSubTree = isBST(node.left, min, value);
-    if(leftSubTree){
+    if (leftSubTree) {
       return isBST(node.right, value, max);
     }
     return false;
-  }else{
+  } else {
     return false;
   }
 }
 
-function solve(root){
+function solve(root) {
   return isBST(root, MIN, MAX);
 }
 
 module.exports = {
   solve: solve
-}
+};

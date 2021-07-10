@@ -7,10 +7,8 @@
  ==============================================================================
  */
 
-function solve(){
-
-}
+function solve() {}
 
 module.exports = {
-    solve: solve
-}
+  solve: solve
+};
